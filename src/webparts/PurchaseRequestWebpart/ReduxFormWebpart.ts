@@ -11,13 +11,23 @@ import {  UrlQueryParameterCollection } from '@microsoft/sp-core-library';
 
 import TrainingWebpart from './components/TrainingWebpart/TrainingWebpart';
 import { ITrainingWebpartProps } from './components/TrainingWebpart/ITrainingWebpartProps';
-
+import pnp from "sp-pnp-js";
 
 export interface IReduxFormWebpartProps {
   description: string;
 }
 
 export default class ReduxFormWebpart extends BaseClientSideWebPart<IReduxFormWebpartProps> {
+ 
+  public onInit():Promise<void>{
+      return super.onInit().then(
+          _=>{
+              pnp.setup({
+                  spfxContext: this.context
+              });
+          }
+      );
+    }
 
   public render(): void {
 
@@ -32,6 +42,7 @@ export default class ReduxFormWebpart extends BaseClientSideWebPart<IReduxFormWe
       {
         description: this.properties.description,
         siteUrl:this.context.pageContext.web.absoluteUrl,
+        //siteUrl:spfxContext,
         spHttpClient:this.context.spHttpClient,
         itemId:id
       }
