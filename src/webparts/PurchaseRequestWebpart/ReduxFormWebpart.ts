@@ -19,15 +19,15 @@ export interface IReduxFormWebpartProps {
 
 export default class ReduxFormWebpart extends BaseClientSideWebPart<IReduxFormWebpartProps> {
  
-  public onInit():Promise<void>{
-      return super.onInit().then(
-          _=>{
-              pnp.setup({
-                  spfxContext: this.context
-              });
-          }
-      );
-    }
+  // public onInit():Promise<void>{
+  //     return super.onInit().then(
+  //         _=>{
+  //             pnp.setup({
+  //                 spfxContext: this.context
+  //             });
+  //         }
+  //     );
+  //   }
 
   public render(): void {
 
