@@ -8,6 +8,30 @@ import { Conversation } from "sp-pnp-js/lib/graph/conversations";
 export default class NewTrainingService implements INewTrainingService {
 
 
+    public convertToUTCDate(originDate:Date):string{
+        let newDate:any;
+        let datestr:string = originDate.toString();
+        let newdate:Date = new Date(datestr);
+
+        let fdate:Date = new Date(newdate.getTime() + Math.abs(newdate.getTimezoneOffset()*60000) )  
+
+        let dateiso = this.ISODateString(fdate);
+        //newDate = new Date(originDate.toUTCString()).toISOString();
+        console.log('New Date: '+dateiso);
+        return dateiso;
+    }
+
+    private ISODateString(d:Date): string {
+        function pad(n) {return n<10 ? '0'+n : n}
+        return (d.getUTCFullYear()+'-'
+             + pad(d.getUTCMonth()+1)+'-'
+             + pad(d.getUTCDate())+'T'
+             + pad(d.getUTCHours())+':'
+             + pad(d.getUTCMinutes())+':'
+             + pad(d.getUTCSeconds())+'Z')
+    }
+    
+    
 
     // Creates a new training request. The request is created in one list. 
     async createNewTrainingItem(trainingData: INewTrainingState, siteUrl): Promise<any> {
@@ -23,13 +47,14 @@ export default class NewTrainingService implements INewTrainingService {
                     //let web = spfxContext;
                     let batch = web.createBatch();
 
+
                     trainingData.trainingItems.forEach(trainingitem => {
                         web.lists.getByTitle("Training List1").items.add(
                             {
                                 "Title": trainingitem.trainingTitle,
                                 TrainingStatus: trainingitem.trainingStatus,
                                 TrainingApproverId: parseInt(trainingitem.trainingApprover),
-                                TrainingDate: new Date(trainingitem.dateOfTraining.toString()).toISOString()
+                                TrainingDate: this.convertToUTCDate(trainingitem.dateOfTraining)
                             }
                         ).then((iar: ItemAddResult) => {
                             console.log(iar);

@@ -55,7 +55,7 @@ class TrainingItemsComponent extends React.Component<WrappedFieldArrayProps<any>
                             <Field key={index+1} name={`${trainingItem}.trainingApprover`} type="text" component={renderInput} placeholder="Training Approver" validate={[required]}/>
                         </td>
                         <td>
-                            <Field key={index+1} name={`${trainingItem}.dateOfTraining`} type="text" component={renderInput} placeholder="Date Of Training" validate={[required]}/>
+                            <Field key={index+1} name={`${trainingItem}.dateOfTraining`} type="Date" component={renderInput} placeholder="Date Of Training" validate={[required]}/>
                         </td>
                         <td>
                             <button type="button" title="Remove Item" onClick={() => this.props.fields.remove(index)}>Remove item</button>
