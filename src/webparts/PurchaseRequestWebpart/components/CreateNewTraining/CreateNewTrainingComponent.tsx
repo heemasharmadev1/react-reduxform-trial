@@ -48,12 +48,12 @@ class TrainingItemsComponent extends React.Component<WrappedFieldArrayProps<any>
                         <td>
                             <Field key={index+1} name={`${trainingItem}.trainingTitle`} type="text" component={renderInput} placeholder="Training Title" validate={[required]}/>
                         </td>
-                        <td>
+                        {/* <td>
                             <Field key={index+1} name={`${trainingItem}.trainingStatus`} type="text" component={renderInput} placeholder="Pending" />
                         </td>
                         <td>
-                            <Field key={index+1} name={`${trainingItem}.trainingApprover`} type="text" component={renderInput} placeholder="Training Approver" validate={[required]}/>
-                        </td>
+                            <Field key={index+1} name={`${trainingItem}.trainingApprover`} type="text" component={renderInput} placeholder="Training Approver"/>
+                        </td> */}
                         <td>
                             <Field key={index+1} name={`${trainingItem}.dateOfTraining`} type="Date" component={renderInput} placeholder="Date Of Training" validate={[required]}/>
                         </td>

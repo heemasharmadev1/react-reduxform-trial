@@ -18,6 +18,15 @@ export const NewTrainingReducer  = (state:INewTrainingState,action) => {
                 trainingItems:action.payload.trainingItems
             };
             break;
+        
+        case "GET_ALL_TRAININGS":
+            // state={
+            //     ...state,
+            //     trainingItems:action.payload.trainingItems
+            // }
+            state={
+                trainingItems:action.payload.trainingItems
+            }
 
         default:
             state = {

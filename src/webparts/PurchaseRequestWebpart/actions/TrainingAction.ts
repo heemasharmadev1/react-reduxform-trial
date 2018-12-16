@@ -17,3 +17,16 @@ export function CreateNewTraining(trainingData:INewTrainingState,siteUrl){
         });
     }
 }
+// Fetches all the training items.
+export function GetAllTraining(siteUrl){
+    return dispatch => {
+        let newTrainingServiceObj:NewTrainingService = new NewTrainingService();
+
+        newTrainingServiceObj.getAllTrainingItems(siteUrl);
+
+        dispatch({
+            type: "GET_ALL_TRAININGS",
+            payload: newTrainingServiceObj
+        });
+    }
+}
