@@ -8,7 +8,8 @@ export interface INewTrainingState{
     // // Represent the values selected for the fields
     // purchasedFor:string;
     // typeOfPurchaseRequest:string;    
-    trainingItems:ITrainingsItem[];    
+    trainingItems:ITrainingsItem[]; 
+    //trainingItem:ITrainingsItem;   
 }
 
 // Represents one tarining item in the Training List.

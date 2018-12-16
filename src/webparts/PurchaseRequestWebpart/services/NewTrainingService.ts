@@ -3,6 +3,7 @@ import { sp, Item, ItemAddResult, Web } from "sp-pnp-js";
 
 import { INewTrainingState } from "../state/INewTrainingControlsState";
 import INewTrainingService from "./INewTrainingService";
+import {ITrainingsItem} from "../state/INewTrainingControlsState";
 import { Conversation } from "sp-pnp-js/lib/graph/conversations";
 
 export default class NewTrainingService implements INewTrainingService {
@@ -45,7 +46,6 @@ export default class NewTrainingService implements INewTrainingService {
                     let web = new Web(siteUrl);
                     //let web = spfxContext;
                     //let batch = web.createBatch();
-
                     trainingData.trainingItems.forEach(trainingitem => {
                         web.lists.getByTitle("Training List1").items.add(
                             {
@@ -85,19 +85,43 @@ export default class NewTrainingService implements INewTrainingService {
     }
 
     //Get all the Training items from the Training List
-    async getAllTrainingItems(siteUrl): Promise<any> {
-        console.log("Inside the getAllTrainingItems, site url: " + siteUrl);
-        return pnp.sp.web.lists.ensure("Training List1")
-        .then((result: ListEnsureResult) => {
-            console.log("Training item fetching starts");
+    // async getAllTrainingItems(siteUrl): Promise<any> {
+    //     console.log("Inside the getAllTrainingItems, site url: " + siteUrl);
+    //     return pnp.sp.web.lists.ensure("Training List1")
+    //     .then((result: ListEnsureResult) => {
+    //         console.log("Training item fetching starts");
+
+    //         let web = new Web(siteUrl);
+    //         pnp.sp.web.lists.getByTitle("Training List1").items.getAll()
+    //         .then((items:any[]) => {
+    //             //let allitems:INewTrainingState = items;
+    //             console.log(items);
+    //             //return allitems;
+    //         });
+    //     });
+    // }
+    async getAllTrainingItems(siteUrl) : Promise<any> {
+        //Return a new Promise
+        return new Promise((resolve,reject) => {
+            let requests=[];
+            //let trainings:INewTrainingState;
+            //let itemOfTraining:ITrainingsItem;
 
             let web = new Web(siteUrl);
-            pnp.sp.web.lists.getByTitle("Training List1").items.getAll()
-            .then((items:any[]) => {
-                //let allitems:INewTrainingState = items;
+            pnp.sp.web.lists.getByTitle("Training List1").items.select("Title","TrainingStatus","TrainingApproverId","TrainingDate").getAll()
+             .then((items:any[]) => {
                 console.log(items);
-                //return allitems;
-            });
+                for(let item of items)
+                {
+                    requests.push({
+                        Title = item["Title"],
+                        TrainingStatus = item["TrainingStatus"],
+                        TrainingApproverId = item["TrainingApproverId"],
+                        TrainingDate = item["TrainingDate"]
+                    });
+                }
+                resolve(requests);
+             });
         });
     }
 }
