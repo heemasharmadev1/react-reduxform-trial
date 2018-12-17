@@ -83,44 +83,34 @@ export default class NewTrainingService implements INewTrainingService {
                 // }
             });
     }
-
-    //Get all the Training items from the Training List
-    // async getAllTrainingItems(siteUrl): Promise<any> {
-    //     console.log("Inside the getAllTrainingItems, site url: " + siteUrl);
-    //     return pnp.sp.web.lists.ensure("Training List1")
-    //     .then((result: ListEnsureResult) => {
-    //         console.log("Training item fetching starts");
-
-    //         let web = new Web(siteUrl);
-    //         pnp.sp.web.lists.getByTitle("Training List1").items.getAll()
-    //         .then((items:any[]) => {
-    //             //let allitems:INewTrainingState = items;
-    //             console.log(items);
-    //             //return allitems;
-    //         });
-    //     });
-    // }
+    //Get all the training items
     async getAllTrainingItems(siteUrl) : Promise<any> {
         //Return a new Promise
         return new Promise((resolve,reject) => {
-            let requests=[];
-            //let trainings:INewTrainingState;
-            //let itemOfTraining:ITrainingsItem;
 
             let web = new Web(siteUrl);
             pnp.sp.web.lists.getByTitle("Training List1").items.select("Title","TrainingStatus","TrainingApproverId","TrainingDate").getAll()
              .then((items:any[]) => {
-                console.log(items);
-                for(let item of items)
-                {
-                    requests.push({
-                        Title = item["Title"],
-                        TrainingStatus = item["TrainingStatus"],
-                        TrainingApproverId = item["TrainingApproverId"],
-                        TrainingDate = item["TrainingDate"]
-                    });
+
+                let trainings:ITrainingsItem[] = [];
+                if(items.length > 0)
+                {                    
+                    for(let item of items)
+                    {
+                        var itemOfTraining:ITrainingsItem = {
+                            trainingTitle: item["Title"],
+                            trainingStatus: item["TrainingStatus"],
+                            trainingApprover : item["TrainingApproverId"],
+                            dateOfTraining : item["TrainingDate"]
+                        };
+                        trainings.push(itemOfTraining);
+                    }
+                    console.log("Training Array length"+ trainings.length);
+                    resolve(trainings);
                 }
-                resolve(requests);
+                else{
+                    //Reject code can be written here
+                }
              });
         });
     }

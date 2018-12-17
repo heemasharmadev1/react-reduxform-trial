@@ -8,6 +8,7 @@ import styles from './TrainingWebpart.module.scss';
 import { ITrainingWebpartProps } from './ITrainingWebpartProps';
 import {INewTrainingState} from "../../state/INewTrainingControlsState";
 import NewTrainingComponent from "../CreateNewTraining/CreateNewTrainingComponent";
+import DemoListComponent from '../List/DemoListComponent';
 
 export default class TrainingWebpart extends React.Component<ITrainingWebpartProps, {}> {
   
@@ -19,6 +20,7 @@ export default class TrainingWebpart extends React.Component<ITrainingWebpartPro
     return (
       <Provider store={trainingStore}>
           <NewTrainingComponent {...this.props}/>
+          {/* <DemoListComponent {...this.props}/> */}
       </Provider>
     );
   }
