@@ -14,13 +14,10 @@ import {
 } from "office-ui-fabric-react";
 
 interface INewFormConnectedState{
-    // Represents a training request and the data from the form.
     newFormControlValues : INewTrainingState;
-    // Represents the initial values. << Unused now. Useful for edit item feature >>
     initialValues:any;
 }
 interface INewFormConnectedDispatch{
-    //createNewTrainingItem:(trainingdata:INewTrainingState, siteUrl:string) => void;
     getAllTrainingItems(siteUrl) : Promise<any>;
 }
 class DemoListComponent extends React.Component<INewFormConnectedState & INewFormConnectedDispatch & ITrainingWebpartProps & InjectedFormProps<{}, INewFormConnectedState>>{
@@ -29,12 +26,13 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
     }
 
     public render(){
-        let items = this.props.newFormControlValues;
+        let newFormControlValues = this.props.newFormControlValues;
 
         return (
             <div>
                 <h2>Training List</h2>
                 <DetailsList items={this.props.newFormControlValues.trainingItems}/>
+                
             </div>
         );
     }
@@ -60,45 +58,3 @@ const mapDispatchToProps = (dispatch):INewFormConnectedDispatch => {
 };
   
 export default connect(mapStateToProps, mapDispatchToProps)(DemoListComponent);  
-/**
- * Properties
- */
-// interface Props {
-//     actions: any,
-//     items: Array<any>
-// }
-
-// /**
-//  * Demo List
-//  */
-// class DemoList extends React.Component<Props, any> {
-//     // Render the list
-//     render() {
-//         let {items} = this.props;
-//         return (
-//             <DetailsList items={this.props.items} />
-//         );
-//     }
-// }
-
-// /**
-//  * Connections
-//  */
-// export default connect(
-//     /**
-//      * State to Property Mapper
-//      */
-//     (state, ownProps) => {
-//         return {
-//             items: state.list.items
-//         };
-//     },
-//     /**
-//      * Actions Mapper
-//      */
-//     (dispatch) => {
-//         return {
-//             actions: listActions
-//         };
-//     }
-// )(DemoList);

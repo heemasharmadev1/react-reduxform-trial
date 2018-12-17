@@ -13,7 +13,7 @@ export default function ConfigureStore():any{
         combineReducers
         ({
             NewFormControlValues:NewTrainingReducer,
-            form:formReducer
+            form:formReducer            
         }),
         {},
         applyMiddleware(thunk)

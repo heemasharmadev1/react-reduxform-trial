@@ -9,6 +9,7 @@ import { ITrainingWebpartProps } from './ITrainingWebpartProps';
 import {INewTrainingState} from "../../state/INewTrainingControlsState";
 import NewTrainingComponent from "../CreateNewTraining/CreateNewTrainingComponent";
 import DemoListComponent from '../List/DemoListComponent';
+import {GetAllTraining} from '../../actions/TrainingAction';
 
 export default class TrainingWebpart extends React.Component<ITrainingWebpartProps, {}> {
   
@@ -16,11 +17,12 @@ export default class TrainingWebpart extends React.Component<ITrainingWebpartPro
 
     // Initialize the redux store
     const trainingStore = ConfigureStore();
-    
+    var siteLink:string = this.props.siteUrl;
+    trainingStore.dispatch(GetAllTraining(siteLink) as any);
     return (
       <Provider store={trainingStore}>
-          <NewTrainingComponent {...this.props}/>
-          {/* <DemoListComponent {...this.props}/> */}
+          {/* <NewTrainingComponent {...this.props}/> */}
+          <DemoListComponent {...this.props}/>
       </Provider>
     );
   }
