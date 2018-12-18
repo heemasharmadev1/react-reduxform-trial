@@ -76,11 +76,7 @@ export default class NewTrainingService implements INewTrainingService {
                 else {
                     alert('Select atleast one training item.');
                 }
-                // }
-                // else
-                // {
-                //     alert('List not present.');
-                // }
+               
             });
     }
     //Get all the training items

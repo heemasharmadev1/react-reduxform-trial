@@ -4,7 +4,7 @@ import ConfigureStore from "../../store/ConfigureStore";
 import { connect } from "react-redux";
 import { Provider } from "react-redux";
 
-import styles from './TrainingWebpart.module.scss';
+//import styles from './TrainingWebpart.module.scss';
 import { ITrainingWebpartProps } from './ITrainingWebpartProps';
 import {INewTrainingState} from "../../state/INewTrainingControlsState";
 import NewTrainingComponent from "../CreateNewTraining/CreateNewTrainingComponent";
