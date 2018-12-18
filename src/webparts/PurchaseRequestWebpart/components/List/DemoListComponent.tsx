@@ -7,12 +7,13 @@ import { GetAllTraining } from '../../actions/TrainingAction';
 import { ITrainingWebpartProps } from '../TrainingWebpart/ITrainingWebpartProps';
 import { Field, reduxForm, InjectedFormProps, FieldArray, WrappedFieldArrayProps, BaseFieldArrayProps } from 'redux-form';
 import { renderDropDown, renderInput } from '../Redux-Form-CustomComponents/FieldRenderers';
+//import {ITrainingsItem} from "../state/INewTrainingControlsState";
+import {ITrainingsItem} from "../../state/INewTrainingControlsState";
 
 import {
     DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn,
     MarqueeSelection
 } from "office-ui-fabric-react";
-import { ITrainingsItem } from "../../../../../lib/webparts/PurchaseRequestWebpart/state/INewTrainingControlsState";
 
 interface INewFormConnectedState {
     newFormControlValues: INewTrainingState;
@@ -22,11 +23,11 @@ interface INewFormConnectedDispatch {
     getAllTrainingItems(siteUrl): Promise<any>;
 }
 
-let _items: ITrainingsItem[] = [];
+let _items:ITrainingsItem[] = [];
 export interface IDetailsListDocumentsExampleState {
     columns: IColumn[];
     //items: IDocument[];
-    items: INewTrainingState;
+    items: ITrainingsItem[];
     isModalSelection: boolean;
     isCompactMode: boolean;
 }
@@ -67,7 +68,30 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
             //     });
             // }
             //  _items = this._sortItems(_items, 'name');
-
+            debugger;
+            //this.props.getAllTrainingItems(this.props.siteUrl);
+            console.log('log2 : '+this.props.getAllTrainingItems(this.props.siteUrl));
+            // .then((items:any[]) => {
+            //     let trainings:ITrainingsItem[] = [];
+            //     if(items.length > 0)
+            //     {                    
+            //         for(let item of items)
+            //         {
+            //             var itemOfTraining:ITrainingsItem = {
+            //                 trainingTitle: item["Title"],
+            //                 trainingStatus: item["TrainingStatus"],
+            //                 trainingApprover : item["TrainingApproverId"],
+            //                 dateOfTraining : item["TrainingDate"]
+            //             };
+            //             trainings.push(itemOfTraining);
+            //         }
+            //         //console.log("Training Array length"+ trainings.length);
+            //         //resolve(trainings);
+            //     }
+            //     else{
+            //         //Reject code can be written here
+            //     }
+            // });
         }
 
         const _columns: IColumn[] = [
@@ -149,9 +173,7 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
             //     }
             // }
         ];
-
-        
-        console.log(this.props.newFormControlValues.trainingItems);
+        console.log('log1 : '+this.props.newFormControlValues.trainingItems);
       
           this.state = {
             items: _items,
@@ -212,5 +234,4 @@ const mapDispatchToProps = (dispatch): INewFormConnectedDispatch => {
         }
     };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(DemoListComponent);  

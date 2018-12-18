@@ -71,7 +71,7 @@ export default class NewTrainingService implements INewTrainingService {
                     //     alert('Added');
                     // });
                     /*Code to fetch all the items */
-                    this.getAllTrainingItems(siteUrl);
+                    //this.getAllTrainingItems(siteUrl);
                 }
                 else {
                     alert('Select atleast one training item.');
@@ -105,7 +105,7 @@ export default class NewTrainingService implements INewTrainingService {
                         };
                         trainings.push(itemOfTraining);
                     }
-                    console.log("Training Array length"+ trainings.length);
+                    //console.log("Training Array length"+ trainings.length);
                     resolve(trainings);
                 }
                 else{
