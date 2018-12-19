@@ -27,7 +27,6 @@ export const NewTrainingReducer  = (state:INewTrainingState,action) => {
             state={
                 trainingItems:action.payload.trainingItems
             }
-
         default:
             state = {
                 ...state,

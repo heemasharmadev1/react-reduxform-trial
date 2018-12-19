@@ -28,5 +28,22 @@ export function GetAllTraining(siteUrl){
             type: "GET_ALL_TRAININGS",
             payload: newTrainingServiceObj
         });
+        
+        /*.then(response => response.json().then(body => ({response,body})))
+        .then(({ response, body }) => {
+            if (!response.ok) {
+                // If request was failed, dispatching FAILURE action.
+                dispatch({
+                  type: 'FETCH_TODOS_FAILURE',
+                  error: body.error
+                });
+              } else {
+                // When everything is ok, dispatching SUCCESS action.
+                dispatch({
+                  type: 'FETCH_TODOS_SUCCESS',
+                  todos: body.todos
+                });
+              }
+        });*/
     }
 }

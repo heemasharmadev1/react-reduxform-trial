@@ -84,13 +84,13 @@ export default class NewTrainingService implements INewTrainingService {
             });
     }
     //Get all the training items
-    async getAllTrainingItems(siteUrl) : Promise<any> {
+    async getAllTrainingItems(siteUrl) {
         //Return a new Promise
-        return new Promise((resolve,reject) => {
+        //return new Promise((resolve,reject) => {
 
             let web = new Web(siteUrl);
             pnp.sp.web.lists.getByTitle("Training List1").items.select("Title","TrainingStatus","TrainingApproverId","TrainingDate").getAll()
-             .then((items:any[]) => {
+             .then((items:ITrainingsItem[]) => {
 
                 let trainings:ITrainingsItem[] = [];
                 if(items.length > 0)
@@ -106,12 +106,13 @@ export default class NewTrainingService implements INewTrainingService {
                         trainings.push(itemOfTraining);
                     }
                     //console.log("Training Array length"+ trainings.length);
-                    resolve(trainings);
+                    return(trainings);
                 }
                 else{
                     //Reject code can be written here
+                    return null;
                 }
              });
-        });
+        //});
     }
 }
