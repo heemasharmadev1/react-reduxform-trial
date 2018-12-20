@@ -15,7 +15,7 @@ import { sp, Item, ItemAddResult, Web } from "sp-pnp-js";
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 import {
-    DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn,
+    DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn,DefaultButton,
     MarqueeSelection
 } from "office-ui-fabric-react";
 
@@ -125,11 +125,26 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
                 onRender: (item: ITrainingsItem1) => {
                     return <span>{item.trainingStatus}</span>;
                   }
+            },
+            {
+                key: 'column4',
+                name: '',
+                fieldName: 'Delete',
+                minWidth: 70,
+                maxWidth: 90,
+                isResizable: true,
+                data: 'string',
+                isPadded: true,
+                onRender: (item: ITrainingsItem1) => {
+                    return <DefaultButton
+                    data-automation-id="test"
+                    text="Delete"
+                    onClick={(e) => this.onbtnclick(item.ID)} />;
+                  }
             }
         ]
-
         this._onChangeText = this._onChangeText.bind(this);
-
+        this.onbtnclick = this.onbtnclick.bind(this);
 
         this.state = {
             items: _items,
@@ -138,6 +153,17 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
             isCompactMode: false
         };
     }
+    public onbtnclick(obj): any {
+        console.log(obj);
+        pnp.sp.web.lists.getByTitle("Training List1").items.getById(obj).delete().then( data => {
+            this._getAllTrainingItems(this.props.siteUrl);
+        })
+        //console.log(this.state.PeopickerItems);
+    }
+    private _onChangeText = (text: string): void => {
+        console.log(text);
+        this.setState({ items: text ? _items.filter(i => i.trainingTitle.toLowerCase().indexOf(text) > -1) : _items });
+    };
 
     public componentWillMount(){
         if (_items.length === 0) {
@@ -163,12 +189,7 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
         return (
             <div>
                 <h2>Training List</h2>
-
-                {/* <TextField onChange={ (e) => this.setState({ items: e ? _items.filter(i => i.name.toLowerCase().indexOf(e) > -1) : _items }) } /> */}
-
-                <TextField label="Filter by name:" onChange={() => this._onChangeText} />
-
-                {/* <DetailsList items={this.props.newFormControlValues.trainingItems} /> */}
+                <TextField label="Filter by Title:" onChanged={(e) => this._onChangeText(e)} />
                 <DetailsList
                     items={items}
                     compact={isCompactMode}
@@ -220,12 +241,6 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
                 }
              });
     }
-
-    private _onChangeText = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => {
-        console.log(text);
-        this.setState({ items: text ? _items.filter(i => i.trainingTitle.toLowerCase().indexOf(text) > -1) : _items });
-      };
-    
 }
 
 //Maps the State to props
