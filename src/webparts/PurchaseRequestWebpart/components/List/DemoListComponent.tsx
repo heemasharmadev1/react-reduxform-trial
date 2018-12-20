@@ -12,6 +12,8 @@ import { ITrainingsItem } from "../../state/INewTrainingControlsState";
 import pnp, { ListEnsureResult } from "sp-pnp-js";
 import { sp, Item, ItemAddResult, Web } from "sp-pnp-js";
 
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
+
 import {
     DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn,
     MarqueeSelection
@@ -50,11 +52,17 @@ interface INewFormConnectedState {
 interface INewFormConnectedDispatch {
     getAllTrainingItems(siteUrl);
 }
-
-let _items: ITrainingsItem[] = [];
+export interface ITrainingsItem1{
+    [key: string]: any;
+    trainingTitle:string;
+    trainingStatus:string;
+    trainingApprover:string;
+    dateOfTraining:Date;
+}
+let _items: ITrainingsItem1[] = [];
 export interface IDetailsListDocumentsExampleState {
     columns: IColumn[];
-    items: ITrainingsItem[];
+    items: ITrainingsItem1[];
     isModalSelection: boolean;
     isCompactMode: boolean;
 }
@@ -79,7 +87,7 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
             {
                 key: 'column1',
                 name: 'Training Name',
-                fieldName: 'name',
+                fieldName: 'trainingTitle',
                 minWidth: 210,
                 maxWidth: 350,
                 isRowHeader: true,
@@ -87,29 +95,42 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
                 isSorted: true,
                 isSortedDescending: false,
                 data: 'string',
-                isPadded: true
+                isPadded: true,
+                onRender: (item: ITrainingsItem1) => {
+                    return <span>{item.trainingTitle}</span>;
+                  }
             },
             {
                 key: 'column2',
                 name: 'Date of Training',
-                fieldName: 'dateModifiedValue',
+                fieldName: 'dateOfTraining',
                 minWidth: 70,
                 maxWidth: 90,
                 isResizable: true,
                 data: 'number',
-                isPadded: true
+                isPadded: true,
+                onRender: (item: ITrainingsItem1) => {
+                    return <span>{item.dateOfTraining}</span>;
+                  }
             },
             {
                 key: 'column3',
                 name: 'Training Status',
-                fieldName: 'modifiedBy',
+                fieldName: 'trainingStatus',
                 minWidth: 70,
                 maxWidth: 90,
                 isResizable: true,
                 data: 'string',
-                isPadded: true
+                isPadded: true,
+                onRender: (item: ITrainingsItem1) => {
+                    return <span>{item.trainingStatus}</span>;
+                  }
             }
         ]
+
+        this._onChangeText = this._onChangeText.bind(this);
+
+
         this.state = {
             items: _items,
             columns: _columns,
@@ -117,10 +138,21 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
             isCompactMode: false
         };
     }
+
+    public componentWillMount(){
+        if (_items.length === 0) {
+            this._getAllTrainingItems(this.props.siteUrl);
+       }
+    }
+
     public componentDidMount() {
         if (_items.length === 0) {
-             var tempObj = this.props.getAllTrainingItems(this.props.siteUrl);
-             console.log("tempObj: "+tempObj);
+             //this.props.getAllTrainingItems(this.props.siteUrl);
+             this._getAllTrainingItems(this.props.siteUrl);
+             //console.log("tempObj: "+tempObj);
+            // this._getAllTrainingItems(this.props.siteUrl).then( data => {
+            //         console.log(data);
+            // });
         }
         //Here we can call the dispatch method of laoding the items
     }
@@ -131,6 +163,11 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
         return (
             <div>
                 <h2>Training List</h2>
+
+                {/* <TextField onChange={ (e) => this.setState({ items: e ? _items.filter(i => i.name.toLowerCase().indexOf(e) > -1) : _items }) } /> */}
+
+                <TextField label="Filter by name:" onChange={() => this._onChangeText} />
+
                 {/* <DetailsList items={this.props.newFormControlValues.trainingItems} /> */}
                 <DetailsList
                     items={items}
@@ -146,10 +183,49 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
                     ariaLabelForSelectionColumn="Toggle selection"
                     ariaLabelForSelectAllCheckbox="Toggle selection for all items"
                 />
-                {this.props.newFormControlValues.map((temp, i) => <li key={i}>{temp.trainingTitle}</li> )}
+                {/* {this.props.newFormControlValues.map((temp, i) => <li key={i}>{temp.trainingTitle}</li> )} */}
             </div>
         );
     }
+
+    private _getAllTrainingItems(siteUrl) {
+        //Return a new Promise
+        //return new Promise((resolve,reject) => {
+
+            let web = new Web(siteUrl);
+            pnp.sp.web.lists.getByTitle("Training List1").items.select("Title","TrainingStatus","TrainingApproverId","TrainingDate").getAll()
+             .then((items:ITrainingsItem1[]) => {
+                 // console.log(items);
+                //let trainings:ITrainingsItem[] = [];
+                if(items.length > 0)
+                {                    
+                    for(let item of items)
+                    {
+                        var itemOfTraining:ITrainingsItem1 = {
+                            trainingTitle: item["Title"],
+                            trainingStatus: item["TrainingStatus"],
+                            trainingApprover : item["TrainingApproverId"],
+                            dateOfTraining : item["TrainingDate"]
+                        };
+                        _items.push(itemOfTraining);
+                    }
+                    console.log(_items);
+                    this.setState({
+                        items : _items
+                    })
+                    return(this.state.items);
+                }
+                else{
+                    return null;
+                }
+             });
+    }
+
+    private _onChangeText = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => {
+        console.log(text);
+        this.setState({ items: text ? _items.filter(i => i.trainingTitle.toLowerCase().indexOf(text) > -1) : _items });
+      };
+    
 }
 
 //Maps the State to props
