@@ -22,7 +22,6 @@ export default class TrainingWebpart extends React.Component<ITrainingWebpartPro
     return (
       <Provider store={trainingStore}>
           <NewTrainingComponent {...this.props}/> 
-          {/* <DemoListComponent {...this.props}/> */}
       </Provider>
     );
   }
