@@ -1,13 +1,5 @@
 // Represents a purchase request
 export interface INewTrainingState{
-
-    // // Represent the choices to be displayed in dropdown when the form loads.
-    // purchasedForOptions:string[];
-    // typeOfPurchaseRequestOptions:string[];
-
-    // // Represent the values selected for the fields
-    // purchasedFor:string;
-    // typeOfPurchaseRequest:string;    
     trainingItems:ITrainingsItem[]; 
     //trainingItem:ITrainingsItem;   
 }

@@ -21,8 +21,8 @@ export default class TrainingWebpart extends React.Component<ITrainingWebpartPro
     trainingStore.dispatch(GetAllTraining(siteLink) as any);
     return (
       <Provider store={trainingStore}>
-          {/* <NewTrainingComponent {...this.props}/>  */}
-          <DemoListComponent {...this.props}/>
+          <NewTrainingComponent {...this.props}/> 
+          {/* <DemoListComponent {...this.props}/> */}
       </Provider>
     );
   }

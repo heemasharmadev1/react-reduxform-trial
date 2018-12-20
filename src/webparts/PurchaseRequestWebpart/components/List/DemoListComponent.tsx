@@ -58,6 +58,7 @@ export interface ITrainingsItem1{
     trainingStatus:string;
     trainingApprover:string;
     dateOfTraining:Date;
+    trainingId: number;
 }
 let _items: ITrainingsItem1[] = [];
 export interface IDetailsListDocumentsExampleState {
@@ -139,7 +140,7 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
                     return <DefaultButton
                     data-automation-id="test"
                     text="Delete"
-                    onClick={(e) => this.onbtnclick(item.ID)} />;
+                    onClick={(e) => this.onbtnclick(item.trainingId)} />;
                   }
             }
         ]
@@ -155,6 +156,7 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
     }
     public onbtnclick(obj): any {
         console.log(obj);
+        let web = new Web(this.props.siteUrl);
         pnp.sp.web.lists.getByTitle("Training List1").items.getById(obj).delete().then( data => {
             this._getAllTrainingItems(this.props.siteUrl);
         })
@@ -170,17 +172,11 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
             this._getAllTrainingItems(this.props.siteUrl);
        }
     }
-
+    //Here we can call the dispatch method of laoding the items
     public componentDidMount() {
         if (_items.length === 0) {
-             //this.props.getAllTrainingItems(this.props.siteUrl);
-             this._getAllTrainingItems(this.props.siteUrl);
-             //console.log("tempObj: "+tempObj);
-            // this._getAllTrainingItems(this.props.siteUrl).then( data => {
-            //         console.log(data);
-            // });
+            this._getAllTrainingItems(this.props.siteUrl);
         }
-        //Here we can call the dispatch method of laoding the items
     }
     public render() {
         //let newFormControlValues = this.props.newFormControlValues;
@@ -213,33 +209,35 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
         //Return a new Promise
         //return new Promise((resolve,reject) => {
 
-            let web = new Web(siteUrl);
-            pnp.sp.web.lists.getByTitle("Training List1").items.select("Title","TrainingStatus","TrainingApproverId","TrainingDate").getAll()
-             .then((items:ITrainingsItem1[]) => {
-                 // console.log(items);
-                //let trainings:ITrainingsItem[] = [];
-                if(items.length > 0)
-                {                    
-                    for(let item of items)
-                    {
-                        var itemOfTraining:ITrainingsItem1 = {
-                            trainingTitle: item["Title"],
-                            trainingStatus: item["TrainingStatus"],
-                            trainingApprover : item["TrainingApproverId"],
-                            dateOfTraining : item["TrainingDate"]
-                        };
-                        _items.push(itemOfTraining);
-                    }
-                    console.log(_items);
-                    this.setState({
-                        items : _items
-                    })
-                    return(this.state.items);
+        let web = new Web(siteUrl);
+        pnp.sp.web.lists.getByTitle("Training List1").items.select("ID","Title","TrainingStatus","TrainingApproverId","TrainingDate").getAll()
+            .then((items:ITrainingsItem1[]) => {
+                // console.log(items);
+            //let trainings:ITrainingsItem[] = [];
+            if(items.length > 0)
+            {
+                _items = [];  
+                for(let item of items)
+                {
+                    var itemOfTraining:ITrainingsItem1 = {
+                        trainingTitle: item["Title"],
+                        trainingStatus: item["TrainingStatus"],
+                        trainingApprover : item["TrainingApproverId"],
+                        dateOfTraining : item["TrainingDate"],
+                        trainingId: item["ID"]
+                    };
+                    _items.push(itemOfTraining);
                 }
-                else{
-                    return null;
-                }
-             });
+                console.log(_items);
+                this.setState({
+                    items : _items
+                })
+                return(this.state.items);
+            }
+            else{
+                return null;
+            }
+            });
     }
 }
 

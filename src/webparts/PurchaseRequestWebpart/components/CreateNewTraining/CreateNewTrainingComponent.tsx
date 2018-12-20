@@ -13,6 +13,9 @@ import { ITrainingWebpartProps } from '../TrainingWebpart/ITrainingWebpartProps'
 
 import { renderDropDown, renderInput } from '../Redux-Form-CustomComponents/FieldRenderers';
 
+//Adding a component here in the main file
+import DemoListComponent from '../List/DemoListComponent';
+
 // Connected state
 interface INewFormConnectedState{
 
@@ -84,8 +87,8 @@ class NewTrainingComponent extends React.Component<INewFormConnectedState & INew
                   <br/>
                   <button type="submit" disabled={this.props.submitting}>Create Training Item</button>
                   <br/>
-              </form>
-              
+              </form>              
+              <DemoListComponent {...this.props}/>
             </div>
         );
     }
