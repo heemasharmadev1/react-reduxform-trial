@@ -5,14 +5,14 @@
     "dynamic-grid-webpart-web-part": {
       "components": [
         {
-          "entrypoint": "./lib/webparts/PurchaseRequestWebpart/ReduxFormWebpart.js",
-          "manifest": "./src/webparts/PurchaseRequestWebpart/ReduxFormWebpartWebPart.manifest.json"
+          "entrypoint": "./lib/webparts/TrainingWebpart/ReduxFormWebpart.js",
+          "manifest": "./src/webparts/TrainingWebpart/ReduxFormWebpartWebPart.manifest.json"
         }
       ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "DynamicGridWebpartWebPartStrings": "lib/webparts/PurchaseRequestWebpart/loc/{locale}.js"
+    "DynamicGridWebpartWebPartStrings": "lib/webparts/TrainingWebpart/loc/{locale}.js"
   }
 }

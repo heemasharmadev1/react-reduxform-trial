@@ -87,7 +87,8 @@ class NewTrainingComponent extends React.Component<INewFormConnectedState & INew
                   <br/>
                   <button type="submit" disabled={this.props.submitting}>Create Training Item</button>
                   <br/>
-              </form>              
+              </form> 
+              {/* Calling the other component here              */}
               <DemoListComponent {...this.props}/>
             </div>
         );
