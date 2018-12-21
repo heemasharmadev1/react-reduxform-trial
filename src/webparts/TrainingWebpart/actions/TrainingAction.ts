@@ -29,14 +29,4 @@ export function GetAllTraining(siteUrl){
             payload: newTrainingServiceObj.getAllTrainingItems(siteUrl)
         });
     }
-    /*return function(dispatch){
-        dispatch({
-            type: "GET_ALL_TRAININGS",
-        });
-        
-        let newTrainingServiceObj:NewTrainingService = new NewTrainingService();
-        newTrainingServiceObj.getAllTrainingItems(siteUrl);
-        
-        return newTrainingServiceObj.getAllTrainingItems(siteUrl);
-    }*/
 }

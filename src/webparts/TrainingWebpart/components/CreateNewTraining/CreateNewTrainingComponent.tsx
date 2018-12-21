@@ -43,7 +43,7 @@ class TrainingItemsComponent extends React.Component<WrappedFieldArrayProps<any>
     public render(){
         return(
             <div>
-                <button type="button" onClick={() => this.props.fields.push({})}>Add training item</button>
+                <button type="button" onClick={() => this.props.fields.push({})}>Add new training item</button>
                 {this.props.fields.map((trainingItem, index) =>
                 <tr>
                     <div>
@@ -58,7 +58,7 @@ class TrainingItemsComponent extends React.Component<WrappedFieldArrayProps<any>
                             <Field key={index+1} name={`${trainingItem}.trainingApprover`} type="text" component={renderInput} placeholder="Training Approver"/>
                         </td> */}
                         <td>
-                            <Field key={index+1} name={`${trainingItem}.dateOfTraining`} type="Date" component={renderInput} placeholder="Date Of Training" validate={[required]}/>
+                            <Field key={index+1} name={`${trainingItem}.dateOfTraining`} type="Date" component={renderInput} placeholder="MM/DD/YYYY" validate={[required]}/>
                         </td>
                         <td>
                             <button type="button" title="Remove Item" onClick={() => this.props.fields.remove(index)}>Remove item</button>
@@ -85,7 +85,7 @@ class NewTrainingComponent extends React.Component<INewFormConnectedState & INew
                       <FieldArray name="trainingItems" component={TrainingItemsComponent}/>
                   </table>
                   <br/>
-                  <button type="submit" disabled={this.props.submitting}>Create Training Item</button>
+                  <button type="submit" disabled={this.props.submitting}>Save Training Item(s)</button>
                   <br/>
               </form> 
               {/* Calling the other component here              */}

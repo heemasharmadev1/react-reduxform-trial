@@ -19,31 +19,6 @@ import {
     MarqueeSelection
 } from "office-ui-fabric-react";
 
-/*interface Props {
-    actions: any,
-    items: Array<any>
-}
-class DemoListComponent extends React.Component<Props, any> {
-    // Render the list
-    render() {
-        let {items} = this.props;
-        return (
-            <DetailsList items={this.props.items} />
-        );
-    }
-}
-export default connect(
-    (state, ownProps) => {
-        return {
-            items: state.items
-        };
-    },
-    (dispatch) => {
-        return {
-            actions: "GET_ALL_TRAININGS"
-        };
-    }
-)(DemoListComponent);*/
 interface INewFormConnectedState {
 //    newFormControlValues: INewTrainingState;
     newFormControlValues: ITrainingsItem[];
@@ -200,7 +175,6 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
                     ariaLabelForSelectionColumn="Toggle selection"
                     ariaLabelForSelectAllCheckbox="Toggle selection for all items"
                 />
-                {/* {this.props.newFormControlValues.map((temp, i) => <li key={i}>{temp.trainingTitle}</li> )} */}
             </div>
         );
     }
@@ -212,8 +186,7 @@ class DemoListComponent extends React.Component<INewFormConnectedState & INewFor
         let web = new Web(siteUrl);
         pnp.sp.web.lists.getByTitle("Training List1").items.select("ID","Title","TrainingStatus","TrainingApproverId","TrainingDate").getAll()
             .then((items:ITrainingsItem1[]) => {
-                // console.log(items);
-            //let trainings:ITrainingsItem[] = [];
+                
             if(items.length > 0)
             {
                 _items = [];  

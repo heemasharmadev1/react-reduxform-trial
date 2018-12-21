@@ -1,7 +1,6 @@
 // Represents a purchase request
 export interface INewTrainingState{
     trainingItems:ITrainingsItem[]; 
-    //trainingItem:ITrainingsItem;   
 }
 
 // Represents one tarining item in the Training List.

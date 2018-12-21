@@ -1,6 +1,3 @@
-/*import { INewFormState } from '../state/INewFormControlsState';
-import { GetInitialControlValuesAction } from '../actions/NewFormControlsValuesAction';
-*/
 import {INewTrainingState} from '../state/INewTrainingControlsState';
 import {CreateNewTraining} from '../actions/TrainingAction';
 import * as objectAssign from "object-assign";
