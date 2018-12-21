@@ -18,7 +18,13 @@ export interface IReduxFormWebpartProps {
 }
 
 export default class ReduxFormWebpart extends BaseClientSideWebPart<IReduxFormWebpartProps> {
- 
+  public onInit(): Promise<void> {     
+    pnp.setup({
+      spfxContext: this.context
+    });
+
+    return Promise.resolve<void>();
+  }
   public render(): void {
 
     var queryParameters = new UrlQueryParameterCollection(window.location.href);
@@ -32,6 +38,7 @@ export default class ReduxFormWebpart extends BaseClientSideWebPart<IReduxFormWe
       {
         description: this.properties.description,
         siteUrl:this.context.pageContext.web.absoluteUrl,
+        //siteUrl:"https://sharmadev1.sharepoint.com/sites/TrainingTeamSiteDemo",
         spHttpClient:this.context.spHttpClient,
         itemId:id
       }
